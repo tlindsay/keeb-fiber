@@ -8,7 +8,11 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.0"
+    "react-midi-context": "tlindsay/react-midi-context",
+    "react-scripts": "3.4.0",
+    "react-three-fiber": "^4.0.21",
+    "three": "^0.115.0",
+    "webmidi": "^2.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
