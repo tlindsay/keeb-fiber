@@ -1,30 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useMidiInputs, useMidiNotes, usePitchBend } from 'react-riffs';
-import { Canvas, Dom, useFrame } from 'react-three-fiber';
+import { useMidiInputs, useMidiNotes } from 'react-riffs';
+import { Canvas, Dom } from 'react-three-fiber';
 import { makeNoise4D } from 'open-simplex-noise';
-import './App.css';
-
-function Box(props) {
-  const mesh = useRef();
-  const bend = usePitchBend(props.midiInput);
-  const [color, setColor] = useState('255,204,204');
-
-  useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
-
-  useEffect(() => {
-    setColor(props.position.map(p => Math.round(Math.abs((p + (bend * 10)) * 10))).join(','));
-  }, [props.position, bend]);
-
-  return (
-    <mesh
-      {...props}
-      ref={mesh}
-    >
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial attach="material" color={`rgb(${color})`} />>
-    </mesh>
-  );
-}
+import Box from './components/Box';
+import './styles/App.css';
 
 function App() {
   const [midiInput] = useMidiInputs({ debug: false });
