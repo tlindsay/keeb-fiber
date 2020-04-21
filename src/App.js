@@ -1,50 +1,59 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useMidiInputs } from 'react-midi-context';
-import { Canvas, useFrame } from 'react-three-fiber';
+import { useMidiInputs, useMidiNotes, usePitchBend } from 'react-riffs';
+import { Canvas, Dom, useFrame } from 'react-three-fiber';
+import { makeNoise4D } from 'open-simplex-noise';
 import './App.css';
 
 function Box(props) {
   const mesh = useRef();
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+  const bend = usePitchBend(props.midiInput);
+  const [color, setColor] = useState('255,204,204');
 
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
+
+  useEffect(() => {
+    setColor(props.position.map(p => Math.round(Math.abs((p + (bend * 10)) * 10))).join(','));
+  }, [props.position, bend]);
 
   return (
     <mesh
       {...props}
       ref={mesh}
-      scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-      onClick={e => setActive(!active)}
-      onPointerOver={e => setHover(true)}
-      onPointerOut={e => setHover(false)}>
+    >
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial attach="material" color={hovered ? 'hotpink' : 'skyblue'} />>
+      <meshStandardMaterial attach="material" color={`rgb(${color})`} />>
     </mesh>
   );
 }
 
 function App() {
-  const [midiInput] = useMidiInputs({ debug: true });
+  const [midiInput] = useMidiInputs({ debug: false });
+  const notes = useMidiNotes(midiInput);
   const [boxes, setBoxes] = useState([]);
+  const { current: noise4d } = useRef(makeNoise4D(Date.now()));
 
   useEffect(() => {
-    midiInput.addListener('noteon', 'all', (e) => {
-      // setBoxes(prevBoxes => [...prevBoxes, <Box position])
-    });
-  })
+    setBoxes(notes.map(n => {
+      let mod = noise4d(...n.data, n.note.number);
+      let pos = Array.from(n.data);
+
+      return {
+        k: n.note.number,
+        p: pos.map(d => d/10 * mod)
+      };
+    }));
+  }, [notes, noise4d]);
 
   return (
-    <>
-      yo 🛹
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-      </Canvas>
-    </>
-  )
+    <Canvas>
+      <Dom>
+        <h1>yo 🛹</h1>
+      </Dom>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      {boxes.map(({k, p}) => <Box key={k} position={p} midiInput={midiInput} />)}
+    </Canvas>
+  );
 }
 
 export default App;
