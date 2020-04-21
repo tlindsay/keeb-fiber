@@ -3,6 +3,7 @@ import { useMidiInputs, useMidiNotes } from 'react-riffs';
 import { Canvas, Dom } from 'react-three-fiber';
 import { makeNoise4D } from 'open-simplex-noise';
 import Box from './components/Box';
+import ShaderPlane from './components/ShaderPlane';
 import './styles/App.css';
 
 function App() {
@@ -26,10 +27,13 @@ function App() {
   return (
     <Canvas>
       <Dom>
-        <h1>yo 🛹</h1>
+        <h1 style={{filter: 'drop-shadow(1px 1px 0 white)'}}>
+          yo <span role="img">🛹</span>
+        </h1>
       </Dom>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
+      <ShaderPlane position={[0, 0, -2]} midiInput={midiInput} />
       {boxes.map(({k, p}) => <Box key={k} position={p} midiInput={midiInput} />)}
     </Canvas>
   );
