@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useFrame } from 'react-three-fiber';
-import { usePitchBend } from 'react-riffs';
+import { usePitchbend } from 'react-riffs';
 
 export default function Box(props) {
   const mesh = useRef();
-  const bend = usePitchBend(props.midiInput);
+  const bend = usePitchbend(props.midiInput);
   const [color, setColor] = useState('255,204,204');
 
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
