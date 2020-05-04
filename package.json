@@ -30,6 +30,8 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
+    "glsl-aastep": "^1.0.1",
+    "glsl-face-normal": "^1.0.2",
     "glslify": "^7.0.0",
     "glslify-loader": "^2.0.0",
     "html-webpack-plugin": "4.0.0-beta.11",

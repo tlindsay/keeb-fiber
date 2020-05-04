@@ -4807,6 +4807,16 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+glsl-aastep@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/glsl-aastep/-/glsl-aastep-1.0.1.tgz#eeaf16961e472c9b8b3d965d080ab8ec1d4c6bb8"
+  integrity sha1-7q8Wlh5HLJuLPZZdCAq47B1Ma7g=
+
+glsl-face-normal@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/glsl-face-normal/-/glsl-face-normal-1.0.2.tgz#7ee775d919a4f2ee92f57bb698e87cc75dbf1288"
+  integrity sha1-fud12Rmk8u6S9Xu2mOh8x12/Eog=
+
 glsl-inject-defines@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/glsl-inject-defines/-/glsl-inject-defines-1.0.3.tgz#dd1aacc2c17fcb2bd3fc32411c6633d0d7b60fd4"
