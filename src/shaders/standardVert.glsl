@@ -1,11 +1,16 @@
-precision highp float;
-
+varying vec3 vNormal;
 varying vec2 vUv;
-uniform float bend;
+varying vec3 vPosition;
+varying vec3 vViewPos;
 
 void main() {
+  vec4 pos = vec4(position, 1.0);
+  vec4 mpos = modelViewMatrix * pos;
+
+  vPosition = position;
   vUv = uv;
-  vec3 pos = position;
-  pos.z = sin(position.y * (bend * 4.0));
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  vNormal = normal;
+  vViewPos = -mpos.xyz;
+  gl_Position = projectionMatrix * mpos;
 }
+

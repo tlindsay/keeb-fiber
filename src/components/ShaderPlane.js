@@ -6,7 +6,7 @@ import { usePitchbend, useClock } from 'react-riffs';
 import niceColors from 'nice-color-palettes';
 
 import fragmentShader from '../shaders/waveFrag.glsl';
-import vertexShader from '../shaders/standardVert.glsl';
+import vertexShader from '../shaders/bendVert.glsl';
 
 const { DoubleSide } = Three;
 
