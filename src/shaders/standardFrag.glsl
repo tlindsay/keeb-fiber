@@ -5,6 +5,6 @@ varying vec3 vPosition;
 varying vec3 vViewPos;
 
 void main() {
-  vec3 color = faceNormal(vViewPos);
+  vec3 color = vNormal;
   gl_FragColor = vec4(color, 1.0);
 }

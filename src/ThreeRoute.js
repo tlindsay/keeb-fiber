@@ -1,18 +1,22 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useParams } from 'react-router-dom';
 import { Canvas } from 'react-three-fiber';
 
-export default function ThreeRoute({ component: Component, ...rest }) {
+export default async function ThreeRoute({ ...rest }) {
+  const { id = 'scratch' } = useParams();
+  const Component = await import(`./scenes/${id}`);
   return (
     <Route {...rest} render={(props) =>
-      <Canvas
-        camera={{ position: [1, 1, 3] }}
-        style={{ background: 'cyan' }}
-        gl2={true}
-        {...props}
-      >
-        <Component {...props}/>
-      </Canvas>
+      <>
+        <Canvas
+          camera={{ position: [1, 1, 3] }}
+          gl2={true}
+          {...props}
+        >
+          <color attach="background" args={['lightblue']} />
+          <Component {...props}/>
+        </Canvas>
+      </>
     }/>
   );
 }

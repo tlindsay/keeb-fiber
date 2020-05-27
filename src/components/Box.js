@@ -1,25 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useFrame } from 'react-three-fiber';
-import { usePitchbend } from 'react-riffs';
+import { useBox } from 'use-cannon';
+import * as Three from 'three';
 
-export default function Box(props) {
-  const mesh = useRef();
-  const bend = usePitchbend(props.midiInput);
-  const [color, setColor] = useState('255,204,204');
+export default function Box({ color = 'pink', position = [0, 5, 0], geometry = new Three.BoxBufferGeometry(1, 1, 1) }) {
+  const [mesh] = useBox(() => ({ mass: 1, position }))
 
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
 
-  useEffect(() => {
-    setColor(props.position.map(p => Math.round(Math.abs((p + (bend * 10)) * 10))).join(','));
-  }, [props.position, bend]);
-
   return (
     <mesh
-      {...props}
       ref={mesh}
+      geometry={geometry}
     >
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial attach="material" color={`rgb(${color})`} />>
+      <meshLambertMaterial attach="material" color={color} />
     </mesh>
   );
 }
