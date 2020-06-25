@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHover } from 'react-use-gesture';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,6 +19,7 @@ import './styles/App.css';
 
 function App() {
   let [collapsed, setCollapse] = useState(false);
+  const bind = useHover(({ hovering }) => setCollapse(hovering));
   let Menu = () => (
     <ul>
       <li>
@@ -42,10 +44,8 @@ function App() {
   );
   return (
     <Router>
-      <div className="router">
-        <button onClick={() => setCollapse(!collapsed)}>
-          <span role="img" aria-label="hamburger">🍔</span>
-        </button>
+      <div {...bind()} className="router">
+        <span role="img" aria-label="hamburger">🍔</span>
         {collapsed ? <Menu /> : <></>}
       </div>
       <Switch>

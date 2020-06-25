@@ -19,7 +19,7 @@ export default function Text({ children, vAlign = 'center', hAlign = 'center', s
   return (
     <mesh>
       <textGeometry attach="geometry" position={position} args={[children, textConfig]} />
-      <meshNormalMaterial attach="material" />
+      <meshNormalMaterial attach="material" side={Three.DoubleSide} />
     </mesh>
   );
 }

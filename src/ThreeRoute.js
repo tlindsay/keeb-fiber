@@ -1,10 +1,8 @@
 import React from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Canvas } from 'react-three-fiber';
 
-export default async function ThreeRoute({ ...rest }) {
-  const { id = 'scratch' } = useParams();
-  const Component = await import(`./scenes/${id}`);
+export default function ThreeRoute({ component: Component, ...rest }) {
   return (
     <Route {...rest} render={(props) =>
       <>
